@@ -1,6 +1,6 @@
 {
     "name": "dssl2-vscode-extension",
-    "displayName": "dssl2_vscode_extension",
+    "displayName": "DSSL2-VSCode",
     "description": "So that I don't have to use DrRacket...",
     "version": "0.0.1",
     "engines": {
@@ -12,7 +12,7 @@
     "contributes": {
         "languages": [{
             "id": "dssl2",
-            "aliases": ["dssl2", "dssl2"],
+            "aliases": ["DSSL2", "dssl2"],
             "extensions": [".rkt"],
             "configuration": "./language-configuration.json"
         }],
@@ -20,6 +20,24 @@
             "language": "dssl2",
             "scopeName": "source.rkt",
             "path": "./syntaxes/dssl2.tmLanguage.json"
-        }]
+        }],
+        "keybindings":[
+            {
+                "command": "editor.action.insertSnippet",
+                "key": "Ctrl+/",
+                "mac": "Cmd+/",
+                "when": "resourceLangId == dssl2 && editorTextFocus",
+                "args": {
+                    "langId": "dssl2",
+                    "name": "lambda"
+                }
+            }
+        ],
+        "snippets": [
+			{
+				"language": "dssl2",
+				"path": "./snippets/dssl2.json"
+			}
+		]
     }
 }

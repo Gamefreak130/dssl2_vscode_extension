@@ -1,0 +1,7 @@
+{
+  "lambda": {
+    "scope": "dssl2",
+    "prefix": "lmb",
+    "body": "λ"
+  }
+}
