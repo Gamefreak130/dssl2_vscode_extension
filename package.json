@@ -85,5 +85,8 @@
 				"path": "./snippets/dssl2.json"
 			}
 		]
+    },
+    "dependencies": {
+        "open": "^6.4.0"
     }
 }
