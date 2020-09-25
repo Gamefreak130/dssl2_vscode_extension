@@ -9,6 +9,12 @@
     "categories": [
         "Programming Languages"
     ],
+    "activationEvents": [
+        "onLanguage:dssl2",
+        "onCommand:dssl2.loadRepl",
+        "onCommand:dssl2.searchDocumentation"
+    ],
+    "main": "./out/extension.js",
     "contributes": {
         "languages": [{
             "id": "dssl2",
@@ -21,6 +27,46 @@
             "scopeName": "source.rkt",
             "path": "./syntaxes/dssl2.tmLanguage.json"
         }],
+        "configuration": {
+            "title": "DSSL2-VSCode",
+            "properties": {
+                "dssl2.racketPath": {
+                    "type": "string",
+                    "default": "racket",
+                    "markdownDescription": "Specifies the path to the `racket` executable, which is used to run the file and open the REPL."
+                }
+            }
+        },
+        "commands": [
+            {
+                "command": "dssl2.loadRepl",
+                "title": "DSSL2: Load file in Racket REPL",
+                "icon": {
+                    "light": "images/run.svg",
+                    "dark": "images/run.svg"
+                }
+            },
+            {
+                "command": "dssl2.searchDocumentation",
+                "title": "DSSL2: Search documentation"
+            }
+        ],
+        "menus": {
+            "editor/title": [
+                {
+                    "when": "editorLangId == dssl2",
+                    "command": "dssl2.loadRepl",
+                    "group": "navigation"
+                }
+            ],
+            "editor/context": [
+                {
+                    "when": "resourceLangId == dssl2 && editorHasSelection",
+                    "command": "dssl2.searchDocumentation",
+                    "group": "z_commands"
+                }
+            ]
+        },
         "keybindings":[
             {
                 "command": "editor.action.insertSnippet",
