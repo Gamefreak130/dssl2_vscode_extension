@@ -4,7 +4,28 @@ const vscode = require("vscode");
 const open = require("open");
 
 function loadInRepl(repls) {
-    vscode.window.showInformationMessage('Loaded');
+	let editor = vscode.window.activeTextEditor;
+	if (editor) {
+        let fileName = normalizeFilePath(editor.document.fileName);
+        fileName = fileName.substring(fileName.lastIndexOf('/') + 1);
+		let racketPath = vscode.workspace.getConfiguration("dssl2").get("racketPath");
+		if (racketPath !== "") {
+            racketPath += ` -tli "${fileName}" dssl2`
+			if (repls.has(fileName)) {
+                let toRemove = repls.get(fileName);
+                repls.delete(fileName);
+				toRemove.dispose();
+			}
+			let repl = createRepl(fileName, racketPath);
+			repls.set(fileName, repl);
+		}
+		else {
+			vscode.window.showErrorMessage("No Racket executable specified. Please add the path to the Racket executable in settings");
+		}
+	}
+	else {
+		vscode.window.showErrorMessage("A file must be opened before you can do that");
+	}
 }
 exports.loadInRepl = loadInRepl;
 
@@ -21,3 +42,15 @@ function searchDocumentation() {
     }
 }
 exports.searchDocumentation = searchDocumentation;
+
+function normalizeFilePath(filePath) {
+    return process.platform === "win32" 
+    ? filePath.replace(/\\/g, "/") : filePath;
+}
+
+function createRepl(filePath, racketPath) {
+    let repl = vscode.window.createTerminal(`REPL (${filePath})`);
+    repl.show();
+    repl.sendText(racketPath);
+    return repl;
+}
