@@ -16,8 +16,8 @@ function loadInRepl(repls) {
 				toRemove.dispose();
             }
             let fileName = filePath.substring(filePath.lastIndexOf('/') + 1);
-			let repl = createRepl(fileName, racketPath);
-			repls.set(filePath, repl);
+            editor.document.save();
+			repls.set(filePath, createRepl(fileName, racketPath));
 		}
 		else {
 			vscode.window.showErrorMessage("No Racket executable specified. Please add the path to the Racket executable in settings");
