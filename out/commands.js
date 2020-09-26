@@ -6,18 +6,18 @@ const open = require("open");
 function loadInRepl(repls) {
 	let editor = vscode.window.activeTextEditor;
 	if (editor) {
-        let fileName = normalizeFilePath(editor.document.fileName);
-        fileName = fileName.substring(fileName.lastIndexOf('/') + 1);
+        let filePath = normalizeFilePath(editor.document.fileName);
 		let racketPath = vscode.workspace.getConfiguration("dssl2").get("racketPath");
 		if (racketPath !== "") {
-            racketPath += ` -tli "${fileName}" dssl2`
-			if (repls.has(fileName)) {
-                let toRemove = repls.get(fileName);
-                repls.delete(fileName);
+            racketPath += ` -tli "${filePath}" dssl2`
+			if (repls.has(filePath)) {
+                let toRemove = repls.get(filePath);
+                repls.delete(filePath);
 				toRemove.dispose();
-			}
+            }
+            let fileName = filePath.substring(filePath.lastIndexOf('/') + 1);
 			let repl = createRepl(fileName, racketPath);
-			repls.set(fileName, repl);
+			repls.set(filePath, repl);
 		}
 		else {
 			vscode.window.showErrorMessage("No Racket executable specified. Please add the path to the Racket executable in settings");
@@ -48,8 +48,8 @@ function normalizeFilePath(filePath) {
     ? filePath.replace(/\\/g, "/") : filePath;
 }
 
-function createRepl(filePath, racketPath) {
-    let repl = vscode.window.createTerminal(`REPL (${filePath})`);
+function createRepl(fileName, racketPath) {
+    let repl = vscode.window.createTerminal(`REPL (${fileName})`);
     repl.show();
     repl.sendText(racketPath);
     return repl;
