@@ -23,7 +23,7 @@
 			"patterns": [
 				{
 				"name": "keyword.control.dssl2",
-				"match": "\\b(def|class|assert|test|assert_error|return|pass|struct|interface|assert_eq)\\b"
+				"match": "\\b(def|class|assert|test|assert_error|return|break|continue|pass|struct|interface|assert_eq)\\b"
 				},
 				{
 				"name": "keyword.other.dssl2",
