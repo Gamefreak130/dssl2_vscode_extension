@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const vscode = require("vscode");
 const open = require("open");
 
-async function loadInRepl(repls) {
+exports.loadInRepl = async (repls) => {
 	let editor = vscode.window.activeTextEditor;
 	if (editor) {
         let filePath = normalizeFilePath(editor.document.fileName);
@@ -27,9 +27,8 @@ async function loadInRepl(repls) {
 		vscode.window.showErrorMessage("A file must be opened before you can do that");
 	}
 }
-exports.loadInRepl = loadInRepl;
 
-function searchDocumentation() {
+exports.searchDocumentation = () => {
     let editor = vscode.window.activeTextEditor;
     if (editor) {
         let trimmed = editor.document.getText(editor.selection).trim();
@@ -41,7 +40,6 @@ function searchDocumentation() {
         vscode.window.showErrorMessage("A file must be opened before you can do that");
     }
 }
-exports.searchDocumentation = searchDocumentation;
 
 function normalizeFilePath(filePath) {
     return process.platform === "win32" 

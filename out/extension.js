@@ -5,7 +5,7 @@ const commands = require("./commands");
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
-function activate(context) {
+exports.activate = (context) => {
     // Each file has one repl, saved in this repls map
     const repls = new Map();
     vscode.window.onDidCloseTerminal((terminal) => {
@@ -16,8 +16,6 @@ function activate(context) {
     const searchDocumentation = vscode.commands.registerCommand("dssl2.searchDocumentation", () => commands.searchDocumentation());
     context.subscriptions.push(loadInRepl, searchDocumentation);
 }
-exports.activate = activate;
 
 // This method is called when your extension is deactivated
-function deactivate() { }
-exports.deactivate = deactivate;
+exports.deactivate = () => {}
