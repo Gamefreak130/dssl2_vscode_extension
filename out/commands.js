@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const vscode = require("vscode");
 const open = require("open");
 
-function loadInRepl(repls) {
+async function loadInRepl(repls) {
 	let editor = vscode.window.activeTextEditor;
 	if (editor) {
         let filePath = normalizeFilePath(editor.document.fileName);
@@ -16,8 +16,8 @@ function loadInRepl(repls) {
 				toRemove.dispose();
             }
             let fileName = filePath.substring(filePath.lastIndexOf('/') + 1);
-            editor.document.save();
-			repls.set(filePath, createRepl(fileName, racketPath));
+            await editor.document.save();
+            repls.set(filePath, createRepl(fileName, racketPath));
 		}
 		else {
 			vscode.window.showErrorMessage("No Racket executable specified. Please add the path to the Racket executable in settings");
